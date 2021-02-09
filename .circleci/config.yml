@@ -34,10 +34,10 @@ workflows:
 
   spotbugs:
     jobs:
-      - spotbugs/generate_report:
+      - maven-spotbugs/generate_report:
           source_directory: src
           command: compile site
-      - spotbugs/upload_report:
+      - maven-spotbugs/upload_report:
           source_directory: src
           spotbugs_results_path: target/site
 
