@@ -142,7 +142,7 @@ public enum ServerStarter {
             System.setProperty("cassandra-num-tokens", "1");
         }
 
-        System.setProperty("cassandra.config.loader", "com.roesch.apollon.embedded.ApollonCassandraConfig");
+        System.setProperty("cassandra.config.loader", "io.github.johannesroesch.apollon.embedded.ApollonCassandraConfig");
 
         final CountDownLatch startupLatch = new CountDownLatch(1);
 
