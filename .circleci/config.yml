@@ -32,8 +32,16 @@ workflows:
     jobs:
       - maven_test
 
-  spotbugs:
+  spotbugs-server:
     jobs:
-      - maven-spotbugs/run
+      - maven-spotbugs/run:
+          source_directory: apollon-embedded-server/src
+          spotbugs_results_path: apollon-embedded-server/target/site
+
+  spotbugs-junit:
+    jobs:
+      - maven-spotbugs/run:
+          source_directory: apollon-junit/src
+          spotbugs_results_path: apollon-junit/target/site
 
   version: 2
