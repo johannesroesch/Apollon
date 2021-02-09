@@ -34,11 +34,6 @@ workflows:
 
   spotbugs:
     jobs:
-      - maven-spotbugs/generate_report:
-          source_directory: src
-          command: compile site
-      - maven-spotbugs/upload_report:
-          source_directory: src
-          spotbugs_results_path: target/site
+      - maven-spotbugs/run
 
   version: 2
