@@ -22,9 +22,34 @@ jobs:
           key: maven-{{ checksum "/tmp/maven_cache_seed" }}
       - store_test_results:
           path: target/surefire-reports
+  spotbugs_run:
+    docker:
+      - image: circleci/openjdk:8-jdk-node
+    steps:
+      - checkout
+      - run:
+          name: Generate Cache Checksum
+          command: find . -name 'pom.xml' | sort | xargs cat > /tmp/maven_cache_seed
+      - restore_cache:
+          key: maven-{{ checksum "/tmp/maven_cache_seed" }}
+      - run:
+          name: Install Libs
+          command: mvn install -DskipTests=true --settings 'pom.xml'
+      - run:
+          name: Run SpotBugs
+          command: mvn spotbugs:spotbugs
+      - store_test_results:
+          path: apollon-junit/target/spotbugs.xml
+      - store_test_results:
+          path: apollon-embedded-server/target/spotbugs.xml
 
 workflows:
   maven_test:
     jobs:
       - maven/test
+
+  spotbugs:
+    jobs:
+      - spotbugs_run
+
   version: 2
