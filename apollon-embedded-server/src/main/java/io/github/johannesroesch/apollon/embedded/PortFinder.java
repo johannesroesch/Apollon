@@ -21,7 +21,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
-import java.util.Random;
 import java.util.stream.IntStream;
 
 public class PortFinder {
@@ -31,9 +30,11 @@ public class PortFinder {
     }
 
     private static final int MAX_TRIES = 100;
+    private static final int MIN_PORT_NUMBER = 1025;
+    private static final int MAX_PORT_NUMBER = 65534;
 
     public static int randomAvailable() {
-        return findAvailableBetween(1025, 65534);
+        return findAvailableBetween(MIN_PORT_NUMBER, MAX_PORT_NUMBER);
     }
 
     public static int findFirstAvailableBetween(int startInclusive, int endExclusive) {
@@ -66,6 +67,10 @@ public class PortFinder {
      */
     @Deprecated
     public static boolean isAvailable(int port) {
+        if (port < MIN_PORT_NUMBER || port > MAX_PORT_NUMBER) {
+            return false;
+        }
+
         ServerSocket ss = null;
         DatagramSocket ds = null;
         try {
@@ -108,6 +113,6 @@ public class PortFinder {
     }
 
     private static int randomBetween(int start, int end) {
-        return start + (new Random().nextInt() * ((end - start) + 1));
+        return start + (int) (Math.random() * ((end - start) + 1));
     }
 }
