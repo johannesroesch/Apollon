@@ -16,6 +16,7 @@
 
 package io.github.johannesroesch.apollon.embedded;
 
+import io.github.johannesroesch.apollon.exception.ApollonBeanMappingException;
 import io.github.johannesroesch.apollon.exception.ApollonException;
 import io.github.johannesroesch.apollon.exception.ApollonInvalidTableException;
 import org.apache.commons.collections.CollectionUtils;
