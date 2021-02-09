@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.roesch.apollon.embedded;
+package io.roesch.apollon.embedded;
 
 import org.apache.cassandra.service.CassandraDaemon;
 import org.slf4j.Logger;

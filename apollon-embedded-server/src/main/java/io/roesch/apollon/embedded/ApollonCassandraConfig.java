@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.roesch.apollon.embedded;
+package io.roesch.apollon.embedded;
 
 import org.apache.cassandra.config.Config;
 import org.apache.cassandra.config.ConfigurationLoader;

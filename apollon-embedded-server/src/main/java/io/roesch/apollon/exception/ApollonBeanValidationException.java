@@ -14,12 +14,24 @@
  *    limitations under the License.
  */
 
-package com.roesch.apollon.exception;
+package io.roesch.apollon.exception;
 
-public class ApollonInvalidTableException extends ApollonException {
+public class ApollonBeanValidationException extends ApollonException {
     private static final long serialVersionUID = 1L;
 
-    public ApollonInvalidTableException(String message) {
+    public ApollonBeanValidationException(Throwable throwable) {
+        super(throwable);
+    }
+
+    public ApollonBeanValidationException() {
+        super();
+    }
+
+    public ApollonBeanValidationException(String message) {
         super(message);
+    }
+
+    public ApollonBeanValidationException(String message, Throwable throwable) {
+        super(message, throwable);
     }
 }

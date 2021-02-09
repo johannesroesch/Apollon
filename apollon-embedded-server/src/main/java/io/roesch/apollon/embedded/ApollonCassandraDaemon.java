@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.roesch.apollon.embedded;
+package io.roesch.apollon.embedded;
 
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;

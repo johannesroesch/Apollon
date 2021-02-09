@@ -14,14 +14,14 @@
  *    limitations under the License.
  */
 
-package com.roesch.apollon.embedded;
+package io.roesch.apollon.embedded;
 
 import com.datastax.oss.driver.api.core.CqlSession;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.roesch.apollon.embedded.ServerStarter.CASSANDRA_EMBEDDED;
+import static io.roesch.apollon.embedded.ServerStarter.CASSANDRA_EMBEDDED;
 
 public class CassandraEmbeddedServer {
     public static final Logger LOGGER = LoggerFactory.getLogger(CassandraEmbeddedServer.class);

@@ -14,24 +14,20 @@
  *    limitations under the License.
  */
 
-package com.roesch.apollon.exception;
+package io.roesch.apollon.exception;
 
-public class ApollonException extends RuntimeException {
+public class ApollonBeanMappingException extends ApollonException {
     private static final long serialVersionUID = 1L;
 
-    public ApollonException(Throwable throwable) {
-        super(throwable);
-    }
-
-    public ApollonException() {
+    public ApollonBeanMappingException() {
         super();
     }
 
-    public ApollonException(String message) {
+    public ApollonBeanMappingException(String message) {
         super(message);
     }
 
-    public ApollonException(String message, Throwable throwable) {
+    public ApollonBeanMappingException(String message, Throwable throwable) {
         super(message, throwable);
     }
 }

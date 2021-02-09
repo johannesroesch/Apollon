@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.roesch.apollon.embedded;
+package io.roesch.apollon.embedded;
 
 import com.datastax.oss.driver.api.core.CqlSession;
 
@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.roesch.apollon.embedded.CassandraEmbeddedConfigParameters.*;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public class CassandraEmbeddedServerBuilder {
@@ -483,83 +482,83 @@ public class CassandraEmbeddedServerBuilder {
     private TypedMap buildConfigMap() {
 
 
-        cassandraParams.put(CLEAN_CASSANDRA_DATA_FILES, cleanDataFiles);
-        cassandraParams.put(CLEAN_CASSANDRA_CONFIG_FILE, cleanConfigFile);
+        cassandraParams.put(CassandraEmbeddedConfigParameters.CLEAN_CASSANDRA_DATA_FILES, cleanDataFiles);
+        cassandraParams.put(CassandraEmbeddedConfigParameters.CLEAN_CASSANDRA_CONFIG_FILE, cleanConfigFile);
 
         if (isNotBlank(listenAddress))
-            cassandraParams.put(LISTEN_ADDRESS, listenAddress);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.LISTEN_ADDRESS, listenAddress);
 
         if (isNotBlank(rpcAddress))
-            cassandraParams.put(RPC_ADDRESS, rpcAddress);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.RPC_ADDRESS, rpcAddress);
 
         if (broadcastAddress != null)
-            cassandraParams.put(BROADCAST_ADDRESS, broadcastAddress);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.BROADCAST_ADDRESS, broadcastAddress);
 
         if (broadcastRpcAddress != null)
-            cassandraParams.put(BROADCAST_RPC_ADDRESS, broadcastRpcAddress);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.BROADCAST_RPC_ADDRESS, broadcastRpcAddress);
 
         if (cassandraShutDownHook != null)
-            cassandraParams.put(SHUTDOWN_HOOK, cassandraShutDownHook);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.SHUTDOWN_HOOK, cassandraShutDownHook);
 
         if (isNotBlank(dataFileFolder))
-            cassandraParams.put(DATA_FILE_FOLDER, dataFileFolder);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.DATA_FILE_FOLDER, dataFileFolder);
 
         if (isNotBlank(commitLogFolder))
-            cassandraParams.put(COMMIT_LOG_FOLDER, commitLogFolder);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.COMMIT_LOG_FOLDER, commitLogFolder);
 
         if (isNotBlank(savedCachesFolder))
-            cassandraParams.put(SAVED_CACHES_FOLDER, savedCachesFolder);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.SAVED_CACHES_FOLDER, savedCachesFolder);
 
         if (isNotBlank(hintsFolder))
-            cassandraParams.put(HINTS_FOLDER, hintsFolder);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.HINTS_FOLDER, hintsFolder);
 
         if (isNotBlank(cdcRawFolder))
-            cassandraParams.put(CDC_RAW_FOLDER, cdcRawFolder);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.CDC_RAW_FOLDER, cdcRawFolder);
 
         if (isNotBlank(clusterName))
-            cassandraParams.put(CLUSTER_NAME, clusterName);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.CLUSTER_NAME, clusterName);
 
         if (isNotBlank(keyspaceName))
-            cassandraParams.put(DEFAULT_KEYSPACE_NAME, keyspaceName);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.DEFAULT_KEYSPACE_NAME, keyspaceName);
 
         if (cqlPort > 0)
-            cassandraParams.put(CASSANDRA_CQL_PORT, cqlPort);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.CASSANDRA_CQL_PORT, cqlPort);
 
         if (jmxPort > 0)
-            cassandraParams.put(CASSANDRA_JMX_PORT, jmxPort);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.CASSANDRA_JMX_PORT, jmxPort);
 
         if (thriftPort > 0)
-            cassandraParams.put(CASSANDRA_THRIFT_PORT, thriftPort);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.CASSANDRA_THRIFT_PORT, thriftPort);
 
         if (storagePort > 0)
-            cassandraParams.put(CASSANDRA_STORAGE_PORT, storagePort);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.CASSANDRA_STORAGE_PORT, storagePort);
 
         if (storageSSLPort > 0)
-            cassandraParams.put(CASSANDRA_STORAGE_SSL_PORT, storageSSLPort);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.CASSANDRA_STORAGE_SSL_PORT, storageSSLPort);
 
         if (concurrentReads > 0)
-            cassandraParams.put(CASSANDRA_CONCURRENT_READS, concurrentReads);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.CASSANDRA_CONCURRENT_READS, concurrentReads);
 
         if (concurrentWrites > 0)
-            cassandraParams.put(CASSANDRA_CONCURRENT_READS, concurrentWrites);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.CASSANDRA_CONCURRENT_READS, concurrentWrites);
 
         if (scriptLocations.size() > 0) {
-            final List<String> existingScriptLocations = cassandraParams.getTypedOr(SCRIPT_LOCATIONS, new ArrayList<>());
+            final List<String> existingScriptLocations = cassandraParams.getTypedOr(CassandraEmbeddedConfigParameters.SCRIPT_LOCATIONS, new ArrayList<>());
             existingScriptLocations.addAll(scriptLocations);
-            cassandraParams.put(SCRIPT_LOCATIONS, existingScriptLocations);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.SCRIPT_LOCATIONS, existingScriptLocations);
         }
 
         if (scriptTemplates.size() > 0) {
-            final Map<String, Map<String, Object>> existingScriptTemplates = cassandraParams.getTypedOr(SCRIPT_TEMPLATES, new HashMap<>());
+            final Map<String, Map<String, Object>> existingScriptTemplates = cassandraParams.getTypedOr(CassandraEmbeddedConfigParameters.SCRIPT_TEMPLATES, new HashMap<>());
             existingScriptTemplates.putAll(scriptTemplates);
-            cassandraParams.put(SCRIPT_TEMPLATES, existingScriptTemplates);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.SCRIPT_TEMPLATES, existingScriptTemplates);
         }
 
         if (useUnsafeCassandraDaemon) {
-            cassandraParams.put(USE_UNSAFE_CASSANDRA_DAEMON, true);
+            cassandraParams.put(CassandraEmbeddedConfigParameters.USE_UNSAFE_CASSANDRA_DAEMON, true);
         }
 
-        cassandraParams.put(KEYSPACE_DURABLE_WRITE, durableWrite);
+        cassandraParams.put(CassandraEmbeddedConfigParameters.KEYSPACE_DURABLE_WRITE, durableWrite);
 
         TypedMap parameters = CassandraEmbeddedConfigParameters.mergeWithDefaultParameters(cassandraParams);
         return parameters;

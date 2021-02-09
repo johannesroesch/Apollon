@@ -14,10 +14,10 @@
  *    limitations under the License.
  */
 
-package com.roesch.apollon.junit;
+package io.roesch.apollon.junit;
 
 import com.datastax.oss.driver.api.core.CqlSession;
-import com.roesch.apollon.embedded.*;
+import io.roesch.apollon.embedded.*;
 import org.junit.rules.ExternalResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -14,11 +14,11 @@
  *    limitations under the License.
  */
 
-package com.roesch.apollon.embedded;
+package io.roesch.apollon.embedded;
 
-import com.roesch.apollon.exception.ApollonBeanMappingException;
-import com.roesch.apollon.exception.ApollonException;
-import com.roesch.apollon.exception.ApollonInvalidTableException;
+import io.roesch.apollon.exception.ApollonBeanMappingException;
+import io.roesch.apollon.exception.ApollonException;
+import io.roesch.apollon.exception.ApollonInvalidTableException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;

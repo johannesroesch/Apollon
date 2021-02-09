@@ -14,12 +14,12 @@
  *    limitations under the License.
  */
 
-package com.roesch.apollon.embedded;
+package io.roesch.apollon.embedded;
 
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.SimpleStatement;
 import com.datastax.oss.driver.api.querybuilder.SchemaBuilder;
-import com.roesch.apollon.exception.ApollonException;
+import io.roesch.apollon.exception.ApollonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 
-import static com.roesch.apollon.embedded.CassandraEmbeddedConfigParameters.*;
+import static io.roesch.apollon.embedded.CassandraEmbeddedConfigParameters.*;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public class AchillesInitializer {
