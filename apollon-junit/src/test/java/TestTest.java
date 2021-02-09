@@ -19,7 +19,7 @@ import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.api.querybuilder.SchemaBuilder;
 import com.datastax.oss.driver.internal.core.type.PrimitiveType;
 import com.datastax.oss.protocol.internal.ProtocolConstants;
-import com.roesch.apollon.junit.CassandraRule;
+import io.github.johannesroesch.apollon.junit.CassandraRule;
 import org.junit.ClassRule;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -30,7 +30,7 @@ import static org.junit.Assert.assertTrue;
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 public class TestTest {
     @ClassRule
-    public static CassandraRule cassandraRule = CassandraRule.builder().build();
+    public static final CassandraRule cassandraRule = CassandraRule.builder().build();
 
     @Test
     public void test1createKeyspace() {
