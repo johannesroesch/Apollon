@@ -14,11 +14,10 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.embedded;
+package io.github.johannesroesch.apollon.embedded;
 
-import io.roesch.apollon.exception.ApollonBeanMappingException;
-import io.roesch.apollon.exception.ApollonException;
-import io.roesch.apollon.exception.ApollonInvalidTableException;
+import io.github.johannesroesch.apollon.exception.ApollonException;
+import io.github.johannesroesch.apollon.exception.ApollonInvalidTableException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -32,6 +31,11 @@ import static java.lang.String.format;
 
 
 public class Validator {
+
+    private Validator() {
+
+    }
+
     public static void validateNotBlank(String arg, String message, Object... args) {
         if (StringUtils.isBlank(arg)) {
             throw new ApollonException(format(message, args));

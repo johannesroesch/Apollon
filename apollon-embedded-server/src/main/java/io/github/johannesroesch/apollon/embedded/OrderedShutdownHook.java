@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.embedded;
+package io.github.johannesroesch.apollon.embedded;
 
 import com.datastax.oss.driver.api.core.CqlSession;
 import org.slf4j.Logger;

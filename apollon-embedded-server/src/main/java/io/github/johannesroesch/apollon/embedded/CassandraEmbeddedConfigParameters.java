@@ -14,13 +14,18 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.embedded;
+package io.github.johannesroesch.apollon.embedded;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 public class CassandraEmbeddedConfigParameters {
+
+    private CassandraEmbeddedConfigParameters() {
+
+    }
+
     /**
      * Configuration parameters
      */
@@ -126,10 +131,6 @@ public class CassandraEmbeddedConfigParameters {
         defaultParams.put(CLUSTER_NAME, DEFAULT_CASSANDRA_EMBEDDED_CLUSTER_NAME);
         defaultParams.put(DEFAULT_KEYSPACE_NAME, DEFAULT_CASSANDRA_EMBEDDED_KEYSPACE_NAME);
         defaultParams.put(KEYSPACE_DURABLE_WRITE, DEFAULT_CASSANDRA_EMBEDDED_KEYSPACE_DURABLE_WRITE);
-//        defaultParams.put(COMPRESSION_TYPE, ProtocolOptions.Compression.NONE);
-//        defaultParams.put(LOAD_BALANCING_POLICY, DefaultLoadBalancingPolicy);
-//        defaultParams.put(RETRY_POLICY, Policies.defaultRetryPolicy());
-//        defaultParams.put(RECONNECTION_POLICY, Policies.defaultReconnectionPolicy());
         defaultParams.putAll(parameters);
 
         return defaultParams;

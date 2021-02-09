@@ -14,13 +14,12 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.embedded;
+package io.github.johannesroesch.apollon.embedded;
 
 import org.apache.cassandra.config.Config;
 import org.apache.cassandra.config.ConfigurationLoader;
 import org.apache.cassandra.config.EncryptionOptions;
 import org.apache.cassandra.config.ParameterizedClass;
-import org.apache.cassandra.exceptions.ConfigurationException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,11 +45,10 @@ public class ApollonCassandraConfig implements ConfigurationLoader {
     static final String ACHILLES_EMBEDDED_CASSANDRA_CDC_RAW_FOLDER = "ACHILLES_EMBEDDED_CASSANDRA_CDC_RAW_FOLDER";
 
     @Override
-    public Config loadConfig() throws ConfigurationException {
+    public Config loadConfig() {
         final Config config = new Config();
 
-        final int numTokens = Integer.parseInt(System.getProperty("cassandra-num-tokens", "256"));
-        config.num_tokens = numTokens;
+        config.num_tokens = Integer.parseInt(System.getProperty("cassandra-num-tokens", "256"));
 
         config.listen_address = System.getProperty(ACHILLES_EMBEDDED_CASSANDRA_LISTEN_ADDRESS);
         config.rpc_address = System.getProperty(ACHILLES_EMBEDDED_CASSANDRA_RPC_ADDRESS);

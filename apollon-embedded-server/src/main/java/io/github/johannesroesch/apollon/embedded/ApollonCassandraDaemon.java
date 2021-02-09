@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.embedded;
+package io.github.johannesroesch.apollon.embedded;
 
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -51,6 +51,8 @@ public class ApollonCassandraDaemon extends CassandraDaemon {
     private static final Logger logger = LoggerFactory.getLogger(ApollonCassandraDaemon.class);
     private NativeTransportService nativeTransportService;
 
+    private static final String EXCEPTION_IN_THREAD_MESSAGE = "Exception in thread {}";
+
     /**
      * Override the default setup process to speed up bootstrap
      * <p>
@@ -77,20 +79,20 @@ public class ApollonCassandraDaemon extends CassandraDaemon {
 
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
             StorageMetrics.uncaughtExceptions.inc();
-            logger.error("Exception in thread {}", t, e);
-            Tracing.trace("Exception in thread {}", t, e);
+            logger.error(EXCEPTION_IN_THREAD_MESSAGE, t, e);
+            Tracing.trace(EXCEPTION_IN_THREAD_MESSAGE, t, e);
             for (Throwable e2 = e; e2 != null; e2 = e2.getCause()) {
                 JVMStabilityInspector.inspectThrowable(e2);
 
                 if (e2 instanceof FSError) {
                     if (e2 != e) // make sure FSError gets logged exactly once.
-                        logger.error("Exception in thread {}", t, e2);
+                        logger.error(EXCEPTION_IN_THREAD_MESSAGE, t, e2);
                     FileUtils.handleFSError((FSError) e2);
                 }
 
                 if (e2 instanceof CorruptSSTableException) {
                     if (e2 != e)
-                        logger.error("Exception in thread " + t, e2);
+                        logger.error(EXCEPTION_IN_THREAD_MESSAGE, t, e2);
                     FileUtils.handleCorruptSSTable((CorruptSSTableException) e2);
                 }
             }
@@ -166,7 +168,7 @@ public class ApollonCassandraDaemon extends CassandraDaemon {
         try {
             StorageService.instance.initServer();
         } catch (ConfigurationException e) {
-            System.err.println(e.getMessage() + "\nFatal configuration error; unable to start server.  See log for stacktrace.");
+            logger.error("Fatal configuration error; unable to start server.  See log for stacktrace./n {}", e.getMessage(), e);
             exitOrFail(1, "Fatal configuration error", e);
         }
 
@@ -186,7 +188,6 @@ public class ApollonCassandraDaemon extends CassandraDaemon {
 
         final ListenableFuture<Integer> rowCacheLoad = CacheService.instance.rowCache.loadSavedAsync();
 
-        @SuppressWarnings("unchecked")
         ListenableFuture<List<Integer>> retval = Futures.successfulAsList(keyCacheLoad, rowCacheLoad);
 
         return retval;

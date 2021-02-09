@@ -14,24 +14,24 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.exception;
+package io.github.johannesroesch.apollon.exception;
 
-public class ApollonTranscodingException extends ApollonException {
+public class ApollonException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public ApollonTranscodingException(Throwable throwable) {
+    public ApollonException(Throwable throwable) {
         super(throwable);
     }
 
-    public ApollonTranscodingException() {
+    public ApollonException() {
         super();
     }
 
-    public ApollonTranscodingException(String message) {
+    public ApollonException(String message) {
         super(message);
     }
 
-    public ApollonTranscodingException(String message, Throwable throwable) {
+    public ApollonException(String message, Throwable throwable) {
         super(message, throwable);
     }
 }

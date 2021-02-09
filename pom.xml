@@ -19,7 +19,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.roesch.apollon</groupId>
+    <groupId>io.github.johannesroesch</groupId>
     <artifactId>apollon-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
@@ -58,6 +58,17 @@
         <developerConnection>scm:git:git@github.com:johannesroesch/Apollon.git</developerConnection>
     </scm>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -67,12 +78,12 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.roesch.apollon</groupId>
+                <groupId>io.github.johannesroesch</groupId>
                 <artifactId>apollon-embedded-server</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.roesch.apollon</groupId>
+                <groupId>io.github.johannesroesch</groupId>
                 <artifactId>apollon-junit</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -118,6 +129,17 @@
                     <includeTests>true</includeTests>
                     <failOnViolation>false</failOnViolation>
                     <skipEmptyReport>false</skipEmptyReport>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>

@@ -14,16 +14,22 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.embedded;
+package io.github.johannesroesch.apollon.embedded;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 public class PortFinder {
+
+    private PortFinder() {
+
+    }
+
     private static final int MAX_TRIES = 100;
 
     public static int randomAvailable() {
@@ -55,30 +61,17 @@ public class PortFinder {
     /**
      * http://stackoverflow.com/questions/434718/sockets-discover-port-
      * availability-using-java
+     *
+     * @deprecated
      */
     @Deprecated
     public static boolean isAvailable(int port) {
-        ServerSocket ss = null;
-        DatagramSocket ds = null;
-        try {
-            ss = new ServerSocket(port);
+        try (ServerSocket ss = new ServerSocket(port); DatagramSocket ds = new DatagramSocket(port)) {
             ss.setReuseAddress(true);
-            ds = new DatagramSocket(port);
             ds.setReuseAddress(true);
             return true;
-        } catch (IOException e) {
-        } finally {
-            if (ds != null) {
-                ds.close();
-            }
+        } catch (IOException ignore) {
 
-            if (ss != null) {
-                try {
-                    ss.close();
-                } catch (IOException e) {
-                    /* should not be thrown */
-                }
-            }
         }
 
         return false;
@@ -100,6 +93,6 @@ public class PortFinder {
     }
 
     private static int randomBetween(int start, int end) {
-        return start + (int) (Math.random() * ((end - start) + 1));
+        return start + (new Random().nextInt() * ((end - start) + 1));
     }
 }

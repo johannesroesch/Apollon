@@ -14,11 +14,11 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.embedded;
+package io.github.johannesroesch.apollon.embedded;
 
 import com.google.common.collect.ImmutableSet;
+import io.github.johannesroesch.apollon.exception.ApollonException;
 import io.netty.util.concurrent.DefaultThreadFactory;
-import io.roesch.apollon.exception.ApollonException;
 import org.apache.cassandra.service.CassandraDaemon;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -37,8 +37,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static io.roesch.apollon.embedded.ApollonCassandraConfig.*;
-import static io.roesch.apollon.embedded.CassandraEmbeddedConfigParameters.*;
+import static io.github.johannesroesch.apollon.embedded.ApollonCassandraConfig.*;
+import static io.github.johannesroesch.apollon.embedded.CassandraEmbeddedConfigParameters.*;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public enum ServerStarter {
@@ -89,13 +89,13 @@ public enum ServerStarter {
         LOGGER.trace("Check and configure Thrift/CQL ports");
         Integer cqlPort = parameters.getTyped(CASSANDRA_CQL_PORT);
         Integer thriftPort = parameters.getTyped(CASSANDRA_THRIFT_PORT);
-        if (cqlPort != null && ServerStarter.cqlPort != cqlPort.intValue()) {
+        if (cqlPort != null && ServerStarter.cqlPort != cqlPort) {
             throw new IllegalArgumentException(String.format("An embedded Cassandra server is already listening to CQL port '%s', the specified CQL port '%s' does not match", ServerStarter.cqlPort, cqlPort));
         } else {
             parameters.put(CASSANDRA_CQL_PORT, ServerStarter.cqlPort);
         }
 
-        if (thriftPort != null && ServerStarter.thriftPort != thriftPort.intValue()) {
+        if (thriftPort != null && ServerStarter.thriftPort != thriftPort) {
             throw new IllegalArgumentException(String.format("An embedded Cassandra server is already listening to Thrift port '%s', the specified Thrift port '%s' does not match", ServerStarter.thriftPort, thriftPort));
         } else {
             parameters.put(CASSANDRA_THRIFT_PORT, ServerStarter.thriftPort);
@@ -111,7 +111,7 @@ public enum ServerStarter {
     }
 
     private void start(final TypedMap parameters) {
-        if (isAlreadyRunning() && CassandraEmbeddedServer.embeddedServerStarted == true) {
+        if (isAlreadyRunning() && CassandraEmbeddedServer.embeddedServerStarted) {
             LOGGER.debug("Cassandra is already running, not starting new one");
             return;
         }
@@ -155,7 +155,7 @@ public enum ServerStarter {
                 LOGGER.warn("******* WARNING, starting unsafe embedded Cassandra daemon. This should be only used for unit testing or development and not for production !");
             }
 
-            CassandraDaemon cassandraDaemon = useUnsafeCassandra == true
+            CassandraDaemon cassandraDaemon = useUnsafeCassandra
                     ? new ApollonCassandraDaemon() : new CassandraDaemon();
 
             cassandraDaemon.completeSetup();
@@ -179,20 +179,18 @@ public enum ServerStarter {
             shutDownHook.addExecutorService(executor);
         } else {
             // Generate an OrderedShutdownHook to shutdown all connections from java clients before closing the server
-            Runtime.getRuntime().addShutdownHook(new Thread() {
-                public void run() {
-                    LOGGER.info("Calling stop on Embedded Cassandra server");
-                    daemonRef.get().stop();
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                LOGGER.info("Calling stop on Embedded Cassandra server");
+                daemonRef.get().stop();
 
-                    LOGGER.info("Calling shutdown on all Cluster instances");
-                    // First call shutdown on all registered Java driver Cluster instances
-                    orderedShutdownHook.callShutDown();
+                LOGGER.info("Calling shutdown on all Cluster instances");
+                // First call shutdown on all registered Java driver Cluster instances
+                orderedShutdownHook.callShutDown();
 
-                    LOGGER.info("Shutting down embedded Cassandra server");
-                    // Then shutdown the server
-                    executor.shutdownNow();
-                }
-            });
+                LOGGER.info("Shutting down embedded Cassandra server");
+                // Then shutdown the server
+                executor.shutdownNow();
+            }));
         }
 
     }
@@ -234,13 +232,13 @@ public enum ServerStarter {
             Validator.validateTrue(folder.canWrite(), "No write credential. Please grant write permission for the current user '%s' on folder '%s'", currentUser, folder.getAbsolutePath());
         } else if (!folder.exists()) {
             try {
-                LOGGER.info("Creating folder : " + folder.getAbsolutePath());
+                LOGGER.info("Creating folder : {}", folder.getAbsolutePath());
                 FileUtils.forceMkdir(folder);
             } catch (IOException e) {
                 throw new RuntimeException("Cannot create Cassandra data folder " + folderPath, e);
             }
         } else {
-            LOGGER.info("Using existing data folder for unit tests : " + folder.getAbsolutePath());
+            LOGGER.info("Using existing data folder for unit tests : {}", folder.getAbsolutePath());
         }
     }
 
@@ -265,22 +263,22 @@ public enum ServerStarter {
     }
 
     private void randomizePortsIfNeeded(TypedMap parameters) {
-        final Integer thriftPort = extractAndValidatePort(Optional.ofNullable(parameters.get(CASSANDRA_THRIFT_PORT))
-                .orElseGet(() -> thriftRandomPort()), CASSANDRA_THRIFT_PORT);
-        final Integer cqlPort = extractAndValidatePort(Optional.ofNullable(parameters.get(CASSANDRA_CQL_PORT))
-                .orElseGet(() -> cqlRandomPort()), CASSANDRA_CQL_PORT);
+        final Integer portThrift = extractAndValidatePort(Optional.ofNullable(parameters.get(CASSANDRA_THRIFT_PORT))
+                .orElseGet(ServerStarter::thriftRandomPort), CASSANDRA_THRIFT_PORT);
+        final Integer protCql = extractAndValidatePort(Optional.ofNullable(parameters.get(CASSANDRA_CQL_PORT))
+                .orElseGet(ServerStarter::cqlRandomPort), CASSANDRA_CQL_PORT);
         final Integer storagePort = extractAndValidatePort(Optional.ofNullable(parameters.get(CASSANDRA_STORAGE_PORT))
-                .orElseGet(() -> storageRandomPort()), CASSANDRA_STORAGE_PORT);
+                .orElseGet(ServerStarter::storageRandomPort), CASSANDRA_STORAGE_PORT);
         final Integer storageSSLPort = extractAndValidatePort(
                 Optional.ofNullable(parameters.get(CASSANDRA_STORAGE_SSL_PORT))
-                        .orElseGet(() -> storageSslRandomPort()), CASSANDRA_STORAGE_SSL_PORT);
+                        .orElseGet(ServerStarter::storageSslRandomPort), CASSANDRA_STORAGE_SSL_PORT);
 
         final Integer jmxPort = extractAndValidatePort(Optional.ofNullable(parameters.get(CASSANDRA_JMX_PORT))
-                .orElseGet(() -> jxmRandomPort()), CASSANDRA_JMX_PORT);
+                .orElseGet(ServerStarter::jxmRandomPort), CASSANDRA_JMX_PORT);
 
 
-        parameters.put(CASSANDRA_THRIFT_PORT, thriftPort);
-        parameters.put(CASSANDRA_CQL_PORT, cqlPort);
+        parameters.put(CASSANDRA_THRIFT_PORT, portThrift);
+        parameters.put(CASSANDRA_CQL_PORT, protCql);
         parameters.put(CASSANDRA_STORAGE_PORT, storagePort);
         parameters.put(CASSANDRA_STORAGE_SSL_PORT, storageSSLPort);
 
@@ -289,16 +287,16 @@ public enum ServerStarter {
         System.setProperty(ACHILLES_EMBEDDED_CASSANDRA_BROADCAST_ADDRESS, parameters.getTyped(BROADCAST_ADDRESS));
         System.setProperty(ACHILLES_EMBEDDED_CASSANDRA_BROADCAST_RPC_ADDRESS, parameters.getTyped(BROADCAST_RPC_ADDRESS));
 
-        System.setProperty(ACHILLES_EMBEDDED_CASSANDRA_THRIFT_PORT, thriftPort.toString());
-        System.setProperty(ACHILLES_EMBEDDED_CASSANDRA_CQL_PORT, cqlPort.toString());
+        System.setProperty(ACHILLES_EMBEDDED_CASSANDRA_THRIFT_PORT, portThrift.toString());
+        System.setProperty(ACHILLES_EMBEDDED_CASSANDRA_CQL_PORT, protCql.toString());
         System.setProperty(ACHILLES_EMBEDDED_CASSANDRA_STORAGE_PORT, storagePort.toString());
         System.setProperty(ACHILLES_EMBEDDED_CASSANDRA_STORAGE_SSL_PORT, storageSSLPort.toString());
 
         System.setProperty("cassandra.jmx.local.port", jmxPort.toString());
         System.setProperty("cassandra.skip_wait_for_gossip_to_settle", "0");
 
-        ServerStarter.cqlPort = cqlPort;
-        ServerStarter.thriftPort = thriftPort;
+        ServerStarter.cqlPort = protCql;
+        ServerStarter.thriftPort = portThrift;
     }
 
     private Integer extractAndValidatePort(Object port, String portLabel) {
@@ -325,11 +323,7 @@ public enum ServerStarter {
             return mBeanInfo != null;
         } catch (InstanceNotFoundException e) {
             return false;
-        } catch (IntrospectionException e) {
-            throw new IllegalStateException("Cannot check if cassandra is already running", e);
-        } catch (MalformedObjectNameException e) {
-            throw new IllegalStateException("Cannot check if cassandra is already running", e);
-        } catch (ReflectionException e) {
+        } catch (IntrospectionException | ReflectionException | MalformedObjectNameException e) {
             throw new IllegalStateException("Cannot check if cassandra is already running", e);
         }
 

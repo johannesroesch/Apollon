@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.embedded;
+package io.github.johannesroesch.apollon.embedded;
 
 import com.datastax.oss.driver.api.core.CqlSession;
 
@@ -27,7 +27,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public class CassandraEmbeddedServerBuilder {
 
-    private final boolean cleanConfigFile = true;
+    private static final boolean cleanConfigFile = true;
     private final List<String> scriptLocations = new ArrayList<>();
     private final Map<String, Map<String, Object>> scriptTemplates = new HashMap<>();
     private final TypedMap cassandraParams = new TypedMap();
@@ -434,7 +434,7 @@ public class CassandraEmbeddedServerBuilder {
      *     <li>disable the SizeEstimatesRecorder (estimate SSTable size, who cares for unit testing or dev ?)</li>
      * </ul>
      *
-     * @return
+     * @return self
      */
     public CassandraEmbeddedServerBuilder useUnsafeCassandraDeamon() {
         this.useUnsafeCassandraDaemon = true;
@@ -458,7 +458,7 @@ public class CassandraEmbeddedServerBuilder {
      *     <li>disable the SizeEstimatesRecorder (estimate SSTable size, who cares for unit testing or dev ?)</li>
      * </ul>
      *
-     * @return
+     * @return self
      */
     public CassandraEmbeddedServerBuilder useUnsafeCassandraDeamon(boolean useUnsafeCassandraDaemon) {
         this.useUnsafeCassandraDaemon = useUnsafeCassandraDaemon;
@@ -542,13 +542,13 @@ public class CassandraEmbeddedServerBuilder {
         if (concurrentWrites > 0)
             cassandraParams.put(CassandraEmbeddedConfigParameters.CASSANDRA_CONCURRENT_READS, concurrentWrites);
 
-        if (scriptLocations.size() > 0) {
+        if (!scriptLocations.isEmpty()) {
             final List<String> existingScriptLocations = cassandraParams.getTypedOr(CassandraEmbeddedConfigParameters.SCRIPT_LOCATIONS, new ArrayList<>());
             existingScriptLocations.addAll(scriptLocations);
             cassandraParams.put(CassandraEmbeddedConfigParameters.SCRIPT_LOCATIONS, existingScriptLocations);
         }
 
-        if (scriptTemplates.size() > 0) {
+        if (!scriptTemplates.isEmpty()) {
             final Map<String, Map<String, Object>> existingScriptTemplates = cassandraParams.getTypedOr(CassandraEmbeddedConfigParameters.SCRIPT_TEMPLATES, new HashMap<>());
             existingScriptTemplates.putAll(scriptTemplates);
             cassandraParams.put(CassandraEmbeddedConfigParameters.SCRIPT_TEMPLATES, existingScriptTemplates);
@@ -560,7 +560,6 @@ public class CassandraEmbeddedServerBuilder {
 
         cassandraParams.put(CassandraEmbeddedConfigParameters.KEYSPACE_DURABLE_WRITE, durableWrite);
 
-        TypedMap parameters = CassandraEmbeddedConfigParameters.mergeWithDefaultParameters(cassandraParams);
-        return parameters;
+        return CassandraEmbeddedConfigParameters.mergeWithDefaultParameters(cassandraParams);
     }
 }

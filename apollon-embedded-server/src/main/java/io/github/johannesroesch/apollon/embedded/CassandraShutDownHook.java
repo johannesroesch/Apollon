@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.embedded;
+package io.github.johannesroesch.apollon.embedded;
 
 import org.apache.cassandra.service.CassandraDaemon;
 import org.slf4j.Logger;
@@ -74,7 +74,7 @@ public class CassandraShutDownHook {
      *     <li><strong>the associated Session object</strong></li>
      * </ul>
      */
-    public void shutDownNow() throws InterruptedException {
+    public void shutDownNow() {
         synchronized (CassandraEmbeddedServer.SEMAPHORE) {
             LOGGER.info("Calling stop on Embedded Cassandra server");
             cassandraDaemonRef.get().stop();

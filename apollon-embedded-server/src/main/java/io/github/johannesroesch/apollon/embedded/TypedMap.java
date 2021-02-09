@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.embedded;
+package io.github.johannesroesch.apollon.embedded;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

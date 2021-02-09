@@ -14,29 +14,24 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.junit;
+package io.github.johannesroesch.apollon.junit;
 
 import com.datastax.oss.driver.api.core.CqlSession;
-import io.roesch.apollon.embedded.*;
+import io.github.johannesroesch.apollon.embedded.*;
 import org.junit.rules.ExternalResource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.function.Consumer;
 
 public class CassandraRule extends ExternalResource {
 
     // Default statement cache for unit testing
-    private static final Logger LOGGER = LoggerFactory.getLogger(CassandraRule.class);
 
     private final TypedMap cassandraParams;
     private final CassandraShutDownHook cassandraShutDownHook = new CassandraShutDownHook();
     private CassandraEmbeddedServer server;
     private CqlSession session;
-    private Consumer<CqlSession> doBefore = s -> {
-    };
-    private Consumer<CqlSession> doAfter = s -> {
-    };
+    private final Consumer<CqlSession> doBefore;
+    private final Consumer<CqlSession> doAfter;
 
     private CassandraRule(final TypedMap parameters, final Consumer<CqlSession> doBefore, final Consumer<CqlSession> doAfter) {
         this.cassandraParams = parameters;
@@ -66,7 +61,7 @@ public class CassandraRule extends ExternalResource {
     }
 
     @Override
-    protected void before() throws Throwable {
+    protected void before() {
         this.server = buildServer();
         this.session = this.server.getNativeSession();
         doBefore.accept(session);
@@ -77,7 +72,7 @@ public class CassandraRule extends ExternalResource {
         doAfter.accept(session);
     }
 
-    public void shutdown() throws InterruptedException {
+    public void shutdown() {
         session.close();
         cassandraShutDownHook.shutDownNow();
     }

@@ -14,14 +14,14 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.embedded;
+package io.github.johannesroesch.apollon.embedded;
 
 import com.datastax.oss.driver.api.core.CqlSession;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static io.roesch.apollon.embedded.ServerStarter.CASSANDRA_EMBEDDED;
+import static io.github.johannesroesch.apollon.embedded.ServerStarter.CASSANDRA_EMBEDDED;
 
 public class CassandraEmbeddedServer {
     public static final Logger LOGGER = LoggerFactory.getLogger(CassandraEmbeddedServer.class);
@@ -57,14 +57,11 @@ public class CassandraEmbeddedServer {
                 }
             }
         }
-        initializer.initializeFromParameters(cassandraHost, parameters);
+        initializer.initializeFromParameters(parameters);
     }
 
     public CqlSession getNativeSession() {
         return initializer.getSingletonSession();
     }
 
-    public void registerSessionForShutdown(CqlSession session) {
-        ServerStarter.CASSANDRA_EMBEDDED.getShutdownHook().addSession(session);
-    }
 }

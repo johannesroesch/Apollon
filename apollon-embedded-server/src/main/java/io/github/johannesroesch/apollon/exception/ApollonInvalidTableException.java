@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package io.roesch.apollon.exception;
+package io.github.johannesroesch.apollon.exception;
 
 public class ApollonInvalidTableException extends ApollonException {
     private static final long serialVersionUID = 1L;
