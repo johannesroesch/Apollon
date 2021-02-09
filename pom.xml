@@ -73,6 +73,9 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.projectKey>johannesroesch_Apollon</sonar.projectKey>
+        <sonar.organization>johannesroesch</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencyManagement>
@@ -103,6 +106,16 @@
     </dependencyManagement>
 
     <build>
+        <!--        <extensions>-->
+        <!--            <extension>-->
+        <!--                <groupId>io.github.johannesroesch</groupId>-->
+        <!--                <artifactId>apollon-embedded-server</artifactId>-->
+        <!--            </extension>-->
+        <!--            <extension>-->
+        <!--                <groupId>io.github.johannesroesch</groupId>-->
+        <!--                <artifactId>apollon-junit</artifactId>-->
+        <!--            </extension>-->
+        <!--        </extensions>-->
         <plugins>
             <plugin>
                 <groupId>com.github.spotbugs</groupId>

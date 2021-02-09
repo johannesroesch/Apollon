@@ -27,21 +27,27 @@ jobs:
       - store_test_results:
           path: target/surefire-reports
 
+  sonar_build:
+    docker:
+      - image: 'circleci/openjdk:11-jdk'
+    steps:
+      - checkout
+      - run:
+          name: Analyze on SonarCloud
+          command: mvn verify sonar:sonar
+
 workflows:
   maven_test:
     jobs:
       - maven_test
 
-  spotbugs-server:
+  spotbugs:
     jobs:
-      - maven-spotbugs/run:
-          source_directory: apollon-embedded-server/src
-          spotbugs_results_path: apollon-embedded-server/target/site
+      - maven-spotbugs/run
 
-  spotbugs-junit:
+  sonar:
     jobs:
-      - maven-spotbugs/run:
-          source_directory: apollon-junit/src
-          spotbugs_results_path: apollon-junit/target/site
+      - sonar_build:
+          context: SonarCloud
 
   version: 2
