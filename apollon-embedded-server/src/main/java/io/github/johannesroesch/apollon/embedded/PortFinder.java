@@ -66,12 +66,27 @@ public class PortFinder {
      */
     @Deprecated
     public static boolean isAvailable(int port) {
-        try (ServerSocket ss = new ServerSocket(port); DatagramSocket ds = new DatagramSocket(port)) {
+        ServerSocket ss = null;
+        DatagramSocket ds = null;
+        try {
+            ss = new ServerSocket(port);
             ss.setReuseAddress(true);
+            ds = new DatagramSocket(port);
             ds.setReuseAddress(true);
             return true;
         } catch (IOException ignore) {
+        } finally {
+            if (ds != null) {
+                ds.close();
+            }
 
+            if (ss != null) {
+                try {
+                    ss.close();
+                } catch (IOException e) {
+                    /* should not be thrown */
+                }
+            }
         }
 
         return false;
