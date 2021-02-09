@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 orbs:
   maven-spotbugs: cbonoz/maven-spotbugs@0.0.2
@@ -34,6 +34,11 @@ workflows:
 
   spotbugs:
     jobs:
-      - spotbugs/run
+      - spotbugs/generate_report:
+          source_directory: src
+          command: compile site
+      - spotbugs/upload_report:
+          source_directory: src
+          spotbugs_results_path: target/site
 
   version: 2
