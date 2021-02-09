@@ -71,8 +71,8 @@ public class AchillesInitializer {
 
     private String extractAndValidateKeyspaceName(TypedMap parameters) {
         String keyspaceName = parameters.getTyped(DEFAULT_KEYSPACE_NAME);
-        Validator.validateNotBlank(keyspaceName, "The provided keyspace name should not be blank");
-        Validator.validateTrue(KEYSPACE_NAME_PATTERN.matcher(keyspaceName).matches(),
+        ValidationHelper.validateNotBlank(keyspaceName, "The provided keyspace name should not be blank");
+        ValidationHelper.validateTrue(KEYSPACE_NAME_PATTERN.matcher(keyspaceName).matches(),
                 "The provided keyspace name '%s' should match the " + "following pattern : '%s'", keyspaceName,
                 KEYSPACE_NAME_PATTERN.pattern());
         return keyspaceName;

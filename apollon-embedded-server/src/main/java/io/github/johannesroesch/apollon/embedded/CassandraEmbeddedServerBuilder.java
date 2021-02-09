@@ -369,7 +369,7 @@ public class CassandraEmbeddedServerBuilder {
      * @return CassandraEmbeddedServerBuilder
      */
     public CassandraEmbeddedServerBuilder withScript(String scriptLocation) {
-        Validator.validateNotBlank(scriptLocation, "The script location should not be blank while executing CassandraEmbeddedServerBuilder.withScript()");
+        ValidationHelper.validateNotBlank(scriptLocation, "The script location should not be blank while executing CassandraEmbeddedServerBuilder.withScript()");
         scriptLocations.add(scriptLocation.trim());
         return this;
     }
@@ -400,8 +400,8 @@ public class CassandraEmbeddedServerBuilder {
      * @return CassandraEmbeddedServerBuilder
      */
     public CassandraEmbeddedServerBuilder withScriptTemplate(String scriptTemplateLocation, Map<String, Object> values) {
-        Validator.validateNotBlank(scriptTemplateLocation, "The script template should not be blank while executing CassandraEmbeddedServerBuilder.withScriptTemplate()");
-        Validator.validateNotEmpty(values, "The template values should not be empty while executing CassandraEmbeddedServerBuilder.withScriptTemplate()");
+        ValidationHelper.validateNotBlank(scriptTemplateLocation, "The script template should not be blank while executing CassandraEmbeddedServerBuilder.withScriptTemplate()");
+        ValidationHelper.validateNotEmpty(values, "The template values should not be empty while executing CassandraEmbeddedServerBuilder.withScriptTemplate()");
         scriptTemplates.put(scriptTemplateLocation.trim(), values);
         return this;
     }

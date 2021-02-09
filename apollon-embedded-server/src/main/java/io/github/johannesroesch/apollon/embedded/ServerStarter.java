@@ -226,10 +226,10 @@ public enum ServerStarter {
         String currentUser = System.getProperty("user.name");
         final File folder = new File(folderPath);
         if (!DEFAULT_ACHILLES_TEST_FOLDERS.contains(folderPath)) {
-            Validator.validateTrue(folder.exists(), "Folder '%s' does not exist", folder.getAbsolutePath());
-            Validator.validateTrue(folder.isDirectory(), "Folder '%s' is not a directory", folder.getAbsolutePath());
-            Validator.validateTrue(folder.canRead(), "No read credential. Please grant read permission for the current user '%s' on folder '%s'", currentUser, folder.getAbsolutePath());
-            Validator.validateTrue(folder.canWrite(), "No write credential. Please grant write permission for the current user '%s' on folder '%s'", currentUser, folder.getAbsolutePath());
+            ValidationHelper.validateTrue(folder.exists(), "Folder '%s' does not exist", folder.getAbsolutePath());
+            ValidationHelper.validateTrue(folder.isDirectory(), "Folder '%s' is not a directory", folder.getAbsolutePath());
+            ValidationHelper.validateTrue(folder.canRead(), "No read credential. Please grant read permission for the current user '%s' on folder '%s'", currentUser, folder.getAbsolutePath());
+            ValidationHelper.validateTrue(folder.canWrite(), "No write credential. Please grant write permission for the current user '%s' on folder '%s'", currentUser, folder.getAbsolutePath());
         } else if (!folder.exists()) {
             try {
                 LOGGER.info("Creating folder : {}", folder.getAbsolutePath());
@@ -300,8 +300,8 @@ public enum ServerStarter {
     }
 
     private Integer extractAndValidatePort(Object port, String portLabel) {
-        Validator.validateTrue(port instanceof Integer, "The provided '%s' port should be an integer", portLabel);
-        Validator.validateTrue((Integer) port > 0, "The provided '%s' port should positive", portLabel);
+        ValidationHelper.validateTrue(port instanceof Integer, "The provided '%s' port should be an integer", portLabel);
+        ValidationHelper.validateTrue((Integer) port > 0, "The provided '%s' port should positive", portLabel);
         return (Integer) port;
 
     }

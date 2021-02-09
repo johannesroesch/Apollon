@@ -127,7 +127,7 @@ public class ScriptExecutor {
 
         InputStream inputStream = this.getClass().getResourceAsStream("/" + scriptLocation);
 
-        Validator.validateNotNull(inputStream, "Cannot find CQL script file at location '%s'", scriptLocation);
+        ValidationHelper.validateNotNull(inputStream, "Cannot find CQL script file at location '%s'", scriptLocation);
 
         Scanner scanner = new Scanner(inputStream);
         List<String> lines = new ArrayList<>();
@@ -146,7 +146,7 @@ public class ScriptExecutor {
             final Matcher matcher = VARIABLE_PATTERN.matcher(nextLine);
             while (matcher.find()) {
                 final String group = matcher.group(1);
-                Validator.validateTrue(variables.containsKey(group),
+                ValidationHelper.validateTrue(variables.containsKey(group),
                         "Cannot find value for variable ${%s} in the variable map provided to ScriptExecutor", group);
                 final String replacement = SPECIAL_REGEX_CHARS.matcher(variables.get(group).toString()).replaceAll("\\\\$0");
                 nextLine = nextLine.replaceFirst("\\$\\{" + group + "\\}", replacement);
