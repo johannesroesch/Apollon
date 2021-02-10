@@ -20,15 +20,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.johannesroesch</groupId>
-    <artifactId>apollon-parent</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>apollon</artifactId>
+    <packaging>jar</packaging>
     <version>1.0.0</version>
-    <modules>
-        <module>apollon-embedded-server</module>
-        <module>apollon-junit</module>
-    </modules>
 
-    <name>Apollon Embedded Cassandra Parent</name>
+    <name>Apollon Embedded Cassandra</name>
 
     <developers>
         <developer>
@@ -36,6 +32,12 @@
             <name>Johannes Roesch</name>
             <email>johannes.roesch@googlemail.com</email>
             <url>https://github.com/johannesroesch</url>
+        </developer>
+        <developer>
+            <id>rusheeljain</id>
+            <name>Rusheel Jain</name>
+            <email>rusheeljain@gmail.com</email>
+            <url>https://github.com/rusheeljain</url>
         </developer>
     </developers>
 
@@ -78,44 +80,32 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.github.johannesroesch</groupId>
-                <artifactId>apollon-embedded-server</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.johannesroesch</groupId>
-                <artifactId>apollon-junit</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>io.github.johannesroesch</groupId>
+            <artifactId>apollon-embedded-server</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.johannesroesch</groupId>
+            <artifactId>apollon-junit</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
-            <dependency>
-                <groupId>org.apache.cassandra</groupId>
-                <artifactId>cassandra-all</artifactId>
-                <version>4.0-beta4</version>
-            </dependency>
+        <dependency>
+            <groupId>org.apache.cassandra</groupId>
+            <artifactId>cassandra-all</artifactId>
+            <version>4.0-beta4</version>
+        </dependency>
 
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.13.1</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+        </dependency>
+    </dependencies>
 
     <build>
-        <!--        <extensions>-->
-        <!--            <extension>-->
-        <!--                <groupId>io.github.johannesroesch</groupId>-->
-        <!--                <artifactId>apollon-embedded-server</artifactId>-->
-        <!--            </extension>-->
-        <!--            <extension>-->
-        <!--                <groupId>io.github.johannesroesch</groupId>-->
-        <!--                <artifactId>apollon-junit</artifactId>-->
-        <!--            </extension>-->
-        <!--        </extensions>-->
         <plugins>
             <plugin>
                 <groupId>com.github.spotbugs</groupId>

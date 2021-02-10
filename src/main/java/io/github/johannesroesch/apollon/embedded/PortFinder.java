@@ -25,13 +25,13 @@ import java.util.stream.IntStream;
 
 public class PortFinder {
 
-    private PortFinder() {
-
-    }
-
     private static final int MAX_TRIES = 100;
     private static final int MIN_PORT_NUMBER = 1025;
     private static final int MAX_PORT_NUMBER = 65534;
+
+    private PortFinder() {
+
+    }
 
     public static int randomAvailable() {
         return findAvailableBetween(MIN_PORT_NUMBER, MAX_PORT_NUMBER);

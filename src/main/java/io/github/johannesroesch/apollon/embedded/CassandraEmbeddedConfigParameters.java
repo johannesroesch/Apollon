@@ -22,70 +22,40 @@ import java.util.Set;
 
 public class CassandraEmbeddedConfigParameters {
 
-    private CassandraEmbeddedConfigParameters() {
-
-    }
-
     /**
      * Configuration parameters
      */
 
     public static final String USE_UNSAFE_CASSANDRA_DAEMON = "useUnsafeCassandraDaemon";
-
     public static final String CLEAN_CASSANDRA_DATA_FILES = "cleanCassandraDataFiles";
-
     public static final String CLEAN_CASSANDRA_CONFIG_FILE = "cleanCassandraConfigFile";
-
     public static final String LISTEN_ADDRESS = "listenAddress";
     public static final String RPC_ADDRESS = "rpcAddress";
     public static final String BROADCAST_ADDRESS = "broadcastAddress";
     public static final String BROADCAST_RPC_ADDRESS = "broadcastRpcAddress";
-
     public static final String SHUTDOWN_HOOK = "shutdownHook";
-
     public static final String DATA_FILE_FOLDER = "datafileFolder";
-
     public static final String COMMIT_LOG_FOLDER = "commitlogFolder";
-
     public static final String SAVED_CACHES_FOLDER = "savedCachesFolder";
-
     public static final String HINTS_FOLDER = "hintsFolder";
-
     public static final String CDC_RAW_FOLDER = "cdcRawFolder";
-
     public static final String LOGBACK_FILE = "logbackXmlFile";
-
     public static final String CLUSTER_NAME = "clusterName";
-
     public static final String COMPRESSION_TYPE = "compressionType";
-
     public static final String LOAD_BALANCING_POLICY = "loadBalancingPolicy";
-
     public static final String RETRY_POLICY = "retryPolicy";
-
     public static final String RECONNECTION_POLICY = "reconnectionPolicy";
-
     public static final String CASSANDRA_THRIFT_PORT = "thriftPort";
-
     public static final String CASSANDRA_CQL_PORT = "cqlPort";
-
     public static final String CASSANDRA_STORAGE_PORT = "storagePort";
-
     public static final String CASSANDRA_STORAGE_SSL_PORT = "storageSSLPort";
-
     public static final String CASSANDRA_JMX_PORT = "jmxPort";
-
     public static final String CASSANDRA_CONCURRENT_READS = "concurrentReads";
-
     public static final String CASSANDRA_CONCURRENT_WRITES = "concurrentWrites";
-
     public static final String DEFAULT_KEYSPACE_NAME = "defaultKeyspaceName";
-
     public static final String KEYSPACE_DURABLE_WRITE = "keyspaceDurableWrite";
-
     public static final String SCRIPT_LOCATIONS = "scriptLocations";
     public static final String SCRIPT_TEMPLATES = "scriptTemplates";
-
     /*
      * Default values
      */
@@ -106,6 +76,10 @@ public class CassandraEmbeddedConfigParameters {
     static final String DEFAULT_CASSANDRA_EMBEDDED_RPC_ADDRESS = "localhost";
     static final String DEFAULT_CASSANDRA_EMBEDDED_BROADCAST_ADDRESS = "localhost";
     static final String DEFAULT_CASSANDRA_EMBEDDED_BROADCAST_RPC_ADDRESS = "localhost";
+
+    private CassandraEmbeddedConfigParameters() {
+
+    }
 
     /**
      * Default values

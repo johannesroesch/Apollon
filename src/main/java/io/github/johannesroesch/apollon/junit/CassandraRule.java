@@ -28,10 +28,10 @@ public class CassandraRule extends ExternalResource {
 
     private final TypedMap cassandraParams;
     private final CassandraShutDownHook cassandraShutDownHook = new CassandraShutDownHook();
-    private CassandraEmbeddedServer server;
-    private CqlSession session;
     private final Consumer<CqlSession> doBefore;
     private final Consumer<CqlSession> doAfter;
+    private CassandraEmbeddedServer server;
+    private CqlSession session;
 
     private CassandraRule(final TypedMap parameters, final Consumer<CqlSession> doBefore, final Consumer<CqlSession> doAfter) {
         this.cassandraParams = parameters;

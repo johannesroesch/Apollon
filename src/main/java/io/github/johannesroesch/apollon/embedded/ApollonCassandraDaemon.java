@@ -49,9 +49,8 @@ import java.util.List;
 public class ApollonCassandraDaemon extends CassandraDaemon {
 
     private static final Logger logger = LoggerFactory.getLogger(ApollonCassandraDaemon.class);
-    private NativeTransportService nativeTransportService;
-
     private static final String EXCEPTION_IN_THREAD_MESSAGE = "Exception in thread {}";
+    private NativeTransportService nativeTransportService;
 
     /**
      * Override the default setup process to speed up bootstrap
