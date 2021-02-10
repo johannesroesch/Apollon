@@ -82,17 +82,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.github.johannesroesch</groupId>
-            <artifactId>apollon-embedded-server</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.johannesroesch</groupId>
-            <artifactId>apollon-junit</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.cassandra</groupId>
             <artifactId>cassandra-all</artifactId>
             <version>4.0-beta4</version>
