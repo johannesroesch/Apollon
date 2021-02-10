@@ -18,7 +18,6 @@ import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.api.querybuilder.SchemaBuilder;
 import com.datastax.oss.driver.internal.core.type.PrimitiveType;
-import com.datastax.oss.protocol.internal.ProtocolConstants;
 import io.github.johannesroesch.apollon.junit.CassandraRule;
 import org.junit.ClassRule;
 import org.junit.FixMethodOrder;
@@ -42,7 +41,7 @@ public class TestTest {
     @Test
     public void test2createTable() {
         final CqlSession session = cassandraRule.getNativeSession();
-        final ResultSet rs = session.execute(SchemaBuilder.createTable("bla", "TEST").ifNotExists().withPartitionKey("a", new PrimitiveType(ProtocolConstants.DataType.INT)).build());
+        final ResultSet rs = session.execute(SchemaBuilder.createTable("bla", "TEST").ifNotExists().withPartitionKey("a", new PrimitiveType(9)).build());
         assertTrue(rs.wasApplied());
     }
 }
